@@ -54,6 +54,9 @@ Random하게 action을 취하면 목표에 도달할 확률이 매우 낮을 것
 
 > 1. Q-Table의 q-value값을 0으로 초기화합니다.
 ```python
+# Q Table을 모두 0으로 초기화 한다. : 2차원 (number of state, action space) = (16,4)
+Q = np.zeros([env.observation_space.n, env.action_space.n])
+
 # entry_point : gym.envs 환경 불러오기
 register(
     id='LakeEnv-',
