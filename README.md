@@ -10,8 +10,6 @@ Agent가 정해진 Action을 하면 Environment에서 state, reward 정보를 �
 
 즉 Agent는 Ation을 통해 얻는 state, reward 정보를 통해 Environment을 학습합니다.
 
-## Q-value
-
 <center><img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbJUGKr%2FbtrBiroAnvL%2F9EKY4DQW6xO8PtfL6PCpRk%2Fimg.png" width=60%></center>
 
 <br>
