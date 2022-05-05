@@ -52,7 +52,45 @@ Random하게 action을 취하면 목표에 도달할 확률이 매우 낮을 것
 
 <br>
 
-1. Q-Table의 q-value값을 0으로 초기화합니다.
+> 1. Q-Table의 q-value값을 0으로 초기화합니다.
+```python
+# entry_point : gym.envs 환경 불러오기
+register(
+    id='LakeEnv-',
+    entry_point='gym.envs.toy_text:FrozenLakeEnv',
+    kwargs={'map_name':'4x4', 'is_slippery':False}
+)
+env = gym.make('LakeEnv-')
 
+state = env.reset() # s₀(시작점)으로 이동
+```
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbIPhBi%2FbtrBlL643Vi%2FumEps7SXkjLn5l7tPRpZmk%2Fimg.png" width="40%">
 
+<br>
 
+> 2. 초기에는 값을 랜덤으로 주고 목표(goal)를 찾기 위해서 여러번의 action을 취합니다. 그리고 목표를 찾았을 때, q-value 값들을 갱신하고 남겨놓음으로써, 다음 에피소드를 진행할 때 목표를 잘 찾을 수 있도록 해줍니다.
+```python
+for i in range(num_episodes):
+        state = env.reset() # state : 0,0부터 시작
+        rAll = 0 # tatal reward
+        done = False
+
+        action_cnt = 0
+        while not done:            
+            action = rargmax(q_value[state, :]) #현재 state에서 최대 보상이 있는 action선택
+
+            # Get new state and reward from environment
+            new_state, reward, done, _ = env.step(action) # state변경
+
+            # Update Q-Table with new knowledge using learning rate
+            q_value[state, action] = reward + np.max(q_value[new_state, :]) #새로운 state에서 방금 행한 행동에 대한 정보 저장.
+
+            state = new_state
+
+```
+
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F8YVhR%2FbtrBlMETePB%2FkkiWK5nYQtiBScCkN2IKj1%2Fimg.png" width="40%">
+
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FUDa0q%2FbtrBib0GihO%2FQrplxFBGGmkAs492iyTD8k%2Fimg.png" width="40%">
+
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FWs654%2FbtrBk8OZL8y%2FFc3U2aS5hVVgCZTc8MWM91%2Fimg.png" width="40%">
