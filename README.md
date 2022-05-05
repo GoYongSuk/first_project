@@ -95,6 +95,8 @@ for i in range(num_episodes):
 
 <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FWs654%2FbtrBk8OZL8y%2FFc3U2aS5hVVgCZTc8MWM91%2Fimg.png" width="40%">
 
+<br>
+
 ## 참고자료
 [Lecture 3: Dummy Q-learning (table) - Sung Kim](https://www.youtube.com/watch?v=Vd-gmo-qO5E&list=PLlMkM4tgfjnKsCWav-Z2F-MMFRx-2gMGG&index=4)<br>
 
