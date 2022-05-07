@@ -34,8 +34,8 @@ Random하게 action을 취하면 목표에 도달할 확률이 매우 낮을 것
 ## Table of contents
 
 <a href='#Dummy_Q_learning'>Dummy Q-learning</a><br>
-<a href='#Tutorials'>Tutorials</a><br>
-<a href='#Multi-Armed Bandits'>Multi-Armed Bandits</a><br>
+<a href='#Exploit_vs_Exploration'>Exploit vs Exploration</a><br>
+<a href='#References'>References</a><br>
 
 <br>
 
@@ -100,10 +100,60 @@ for i in range(num_episodes):
 
 <br>
 
-## 참고자료
+***
+
+<a id='Exploit_vs_Exploration'></a>
+
+## Exploit vs Exploration
+
+Dummy q-learning은 q-value의 최대값을 따라 움직이기 때문에 하나의 경로가 정해진 이후에 더 좋은 경로가 있어도 새로운 길을 찾는 시도를 하지않습니다. 아래와 같이 q-table로 결정된 1번 경로는 최적의 경로가 아니고 2번 경로가 최적의 경로입니다. 이와 같은 문제를 해결하기 위해서 Exploit vs Exploration 알고리즘을 사용합니다. <br>
+
+>Exploit는 이미 알고있는 q-value값을 사용하여 action을 선택하는 것이고, Exploration은 랜덤하게 새로운 action을 선택하는 방법입니다.
+
+<br>
+
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbbAUxp%2FbtrBrsVl7AP%2FGJgPVU8nigf7uIUXg6jcik%2Fimg.png" width="50%">
+
+<br>
+
+그래서 우리는 E-greedy 방식을 사용하여 action을 결정합니다.
+```python
+e = 0.1
+
+if rand < e:  # 랜덤하게 뽑는 값이 e보다 작으면 Exploration(탐험)하게 action
+    action = random
+else:         # e보다 크면 이미 알고 있는 q-value 값이 최대인 방향으로 action
+    action = argmax(Q(s, a))
+```
+
+<br>
+
+계속해서 랜덤하게 움직인다면 경로가 어느정도 정해진 이후에도 이상한 경로로 빠질 수 있습니다. <br>
+
+그래서 학습을 거듭할수록 정해진 경로가 나오게 된 이후에도 랜덤하게 움직이는 것을 막기위해서, 학습하는 초기에는 랜덤하게 많이가고 학습 후반부에는 e값을 줄여서 탐험을 줄이고 알고 있는 값을 바탕으로 이동하도록 하는 방법인 decaying E-greedy 를 사용합니다.
+```python
+for i in range(episodes):
+    e = 0.1 / (i + 1)
+    if random(1) < e:
+        action = random
+    else:
+        action = argmax(Q(s, a))
+```
+### <결과>
+
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbV3uJt%2FbtrBsZrahb3%2FstJ6LOaG3ZoFCPXFtXwSm0%2Fimg.png" width="60%">
+
+<br>
+
+
+
+<a id='References'></a>
+
+## References
 [Lecture 3: Dummy Q-learning (table) - Sung Kim](https://www.youtube.com/watch?v=Vd-gmo-qO5E&list=PLlMkM4tgfjnKsCWav-Z2F-MMFRx-2gMGG&index=4)<br>
-
 [Lab 3: Dummy Q-learning (table) - Sung Kim](https://www.youtube.com/watch?v=yOBKtGU6CG0&list=PLlMkM4tgfjnKsCWav-Z2F-MMFRx-2gMGG&index=5)<br>
-
 [강의 슬라이드](http://hunkim.github.io/ml/)
 
+---
+
+[Lecture 4: Q-learning (table) exploit&exploration and discounted reward](https://www.youtube.com/watch?v=MQ-3QScrFSI&list=PLlMkM4tgfjnKsCWav-Z2F-MMFRx-2gMGG&index=6)<br>
