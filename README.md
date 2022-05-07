@@ -36,6 +36,7 @@ Random하게 action을 취하면 목표에 도달할 확률이 매우 낮을 것
 <a href='#Dummy_Q_learning'>Dummy Q-learning</a><br>
 <a href='#Exploit_vs_Exploration'>Exploit vs Exploration</a><br>
 <a href='#discount_reward'>Discount Reward</a><br>
+<a href='#Deterministic_vs_Stochastic'>Deterministic vs Stochastic</a><br>
 <a href='#References'>References</a><br>
 
 <br>
@@ -45,7 +46,12 @@ Random하게 action을 취하면 목표에 도달할 확률이 매우 낮을 것
 <a id='Dummy_Q_learning'></a>
 
 ## Dummy Q-learning (table)
->Action을 통해 얻는 보상을 최대화 시키는 알고리즘.  
+>Action을 통해 얻는 보상을 최대화 시키는 알고리즘. 
+
+현재 state에서 action을 취했을 때 goal에 도착하면 reward를 가져오고, goal이 아니면 다음 state의 최대 q-value를 받아옵니다. 
+```python
+q_value[state, action] = reward + np.max(q_value[new_state, :]) 
+```
 
 <br>
 
@@ -159,7 +165,26 @@ for i in range(episodes):
 <a id='discount_reward'></a>
 
 ## Discount Reward
+Exploit vs Exploration을 통해 action을 랜덤으로 선택해서 다양한 경로를 찾았다면 이제는 그 경로 중 제일 좋은 경로를 알아내야합니다. 
 
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb6J6i9%2FbtrBxbjOLt3%2FVkDO6IXIGQ16v6ZIlfEjqK%2Fimg.png" width="50%">
+
+
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbDqJcy%2FbtrBsu6gyrc%2FKbLFSIgbFvGbsm7GmDFPWk%2Fimg.png" width="60%">
+
+
+q-value를 갱신할 때 discount reward를 곱해줌으로써 많은 state를 지날수록 더 낮을 값을 가지도록 만들어줍니다. 이를 통해 최적의 경로를 찾을 수 있습니다.
+```python
+q_value[state, action] = reward + discount_reward * np.max(q_value[new_state,:])
+```
+
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbkNeYG%2FbtrBrKaIOfk%2FSxh81GwPpccnC3kyBJabOK%2Fimg.png" width="70%">
+
+<br>
+
+<a id='Deterministic_vs_Stochastic'></a>
+
+## Deterministic vs Stochastic
 
 
 
@@ -168,8 +193,15 @@ for i in range(episodes):
 ## References
 [Lecture 3: Dummy Q-learning (table) - Sung Kim](https://www.youtube.com/watch?v=Vd-gmo-qO5E&list=PLlMkM4tgfjnKsCWav-Z2F-MMFRx-2gMGG&index=4)<br>
 [Lab 3: Dummy Q-learning (table) - Sung Kim](https://www.youtube.com/watch?v=yOBKtGU6CG0&list=PLlMkM4tgfjnKsCWav-Z2F-MMFRx-2gMGG&index=5)<br>
-[강의 슬라이드](http://hunkim.github.io/ml/)
 
 ---
 
-[Lecture 4: Q-learning (table) exploit&exploration and discounted reward](https://www.youtube.com/watch?v=MQ-3QScrFSI&list=PLlMkM4tgfjnKsCWav-Z2F-MMFRx-2gMGG&index=6)<br>
+[Lecture 4: Q-learning (table) exploit&exploration and discounted reward - Sung Kim](https://www.youtube.com/watch?v=MQ-3QScrFSI&list=PLlMkM4tgfjnKsCWav-Z2F-MMFRx-2gMGG&index=6)<br>
+[Lab 4: Q-learning (table) exploit&exploration and discounted reward - Sung Kim](https://www.youtube.com/watch?v=VYOq-He90bE&list=PLlMkM4tgfjnKsCWav-Z2F-MMFRx-2gMGG&index=7)<br>
+
+---
+[Lecture 05: Q-learning on Nondeterministic Worlds! - Sung Kim](https://www.youtube.com/watch?v=6KSf-j4LL-c&list=PLlMkM4tgfjnKsCWav-Z2F-MMFRx-2gMGG&index=8)<br>
+
+---
+
+[강의 슬라이드](http://hunkim.github.io/ml/)
