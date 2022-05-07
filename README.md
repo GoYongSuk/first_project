@@ -43,6 +43,8 @@ Random하게 action을 취하면 목표에 도달할 확률이 매우 낮을 것
 
 ***
 
+<br>
+
 <a id='Dummy_Q_learning'></a>
 
 ## Dummy Q-learning (table)
@@ -107,6 +109,8 @@ for i in range(num_episodes):
 
 <br>
 
+<br>
+
 ***
 
 <a id='Exploit_vs_Exploration'></a>
@@ -162,6 +166,9 @@ for i in range(episodes):
 
 <br>
 
+<br>
+
+***
 <a id='discount_reward'></a>
 
 ## Discount Reward
@@ -182,11 +189,52 @@ q_value[state, action] = reward + discount_reward * np.max(q_value[new_state,:])
 
 <br>
 
+<br>
+
+***
+
 <a id='Deterministic_vs_Stochastic'></a>
 
 ## Deterministic vs Stochastic
 
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fy75Jh%2FbtrBqZ6G32w%2Ff9cCujCagtEKUt7JQk6PS0%2Fimg.png" width="70%">
 
+<br>
+
+Deterministric [is_slippery: False]은 키보드 방향키 오른쪽을 눌렀을 때 오른쪽으로 이동하는 것처럼 특정한 행동에 대해 항상 같은 결과를 나타냅니다. 그래서 학습시 안정적인 결과를 얻을 수 있습니다.
+
+<br>
+
+Stochastic [is_slippery: True]은 키보드의 입력과는 다르게 움직이 것처럼 행동에 대해 미끄러지면서 다른 결과를 나타냅니다. Stochastic환경에서는 q-value값이 Frozen Lake에서 미끄려져 우연히 이동한 결과값 일 수도 있기 때문에 q-value값대로 이동하면 아래 그림과 같이 좋은 결과를 얻을 수 없습니다. (env = gym.make('FrozenLake-v0')) 환경은 기본 세팅이 [is_slippery: True] 되어있습니다.)
+
+<br>
+
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FkDKfx%2FbtrBuArqnBl%2FoYcf25NUrx8ZvDeZJxW5Nk%2Fimg.png" width="50%">
+
+<br>
+
+위와 같은 문제를 해결하기 위해서 q-value를 그대로 따르지않고 Learning rate: a를 정해서 이후에 들어오는 q-value값을 얼마나 반영할지 결정합니다. Learning rate값이 0.1이면 기존에 가지고 있는 q-value을 90% 반영하고 받아오는 q-value값은 10%만 반영하게 됩니다. 
+
+<br>
+
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fsf4TC%2FbtrBxbYKtvj%2Fm9eARC7eiKBaRmclU1CgKK%2Fimg.png" width="60%">
+
+<br>
+
+```python
+q_value[state, action] = (1-learning_rate) * Q[state, action] + \ 
+                        learning_rate * (reward + dis * np.max(Q[new_state, :]))
+```
+
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FrbcQo%2FbtrBwtrstXQ%2F2Js9YveTMiBnU3NodGzqD1%2Fimg.png" width="40%">
+
+<br>
+
+learning rate를 사용한 결과 이전보다 개선이 많이 된 것을 확인할 수 있습니다.
+
+<br>
+
+<br>
 
 <a id='References'></a>
 
@@ -204,4 +252,5 @@ q_value[state, action] = reward + discount_reward * np.max(q_value[new_state,:])
 
 ---
 
-[강의 슬라이드](http://hunkim.github.io/ml/)
+[강의 슬라이드](http://hunkim.github.io/ml/)<br>
+[참고 블로그](https://rrojin.tistory.com/5)
