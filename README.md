@@ -35,6 +35,7 @@ Random하게 action을 취하면 목표에 도달할 확률이 매우 낮을 것
 
 <a href='#Dummy_Q_learning'>Dummy Q-learning</a><br>
 <a href='#Exploit_vs_Exploration'>Exploit vs Exploration</a><br>
+<a href='#discount_reward'>Discount Reward</a><br>
 <a href='#References'>References</a><br>
 
 <br>
@@ -144,6 +145,21 @@ for i in range(episodes):
 <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbV3uJt%2FbtrBsZrahb3%2FstJ6LOaG3ZoFCPXFtXwSm0%2Fimg.png" width="60%">
 
 <br>
+
+### Random noise
+> 기존의 random 방식은 q-value값이 작던 크던간에 random하게 움직이는 것이라면 Random noise는 기존 값을 반영해서 1순위가 아니라 2순위, 3순위로 랜덤하게 움직이게 하는 방법입니다. 
+
+
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcF4Xoj%2FbtqSWaDycOo%2FcWR34yf8If9zXh64WTAxNk%2Fimg.png"  width="60%">
+
+<img src="https://blog.kakaocdn.net/dn/ca1Q6t/btqS4MnjYXb/wQZFdxWw3RTHCqp2bHSTD1/img.png" width="60%">
+
+<br>
+
+<a id='discount_reward'></a>
+
+## Discount Reward
+
 
 
 
